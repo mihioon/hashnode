@@ -361,7 +361,7 @@ Redis를 익히기 위해 코드를 구현해보긴 했지만, Redis는 분산�
 
 재고 관리 시스템에서 대용량 요청이 발생하지 않는 상황을 가정하고 있기 때문에, 데이터베이스 락을 사용하여 충분히 구현할 수 있다. 특히, 전체 트랜잭션에 락을 거는 것보다는 물품별로 락을 거는 것이 더 효과적이다. 동시성 이슈가 발생하는 상황에서 재고 차감을 최대한 진행해야 하므로, 충돌 시 일정 시간 후 로직을 재실행하여 트랜잭션을 오래 유지하는 것보다는 비관적 락(pessimistic lock)을 사용하는 것이 더 적합하다고 최종적으로 판단했다.
 
-#### 참고자료
+**📘 참고자료**
 
 [https://techblog.woowahan.com/17416/](https://techblog.woowahan.com/17416/)  
 [https://helloworld.kurly.com/blog/distributed-redisson-lock/](https://helloworld.kurly.com/blog/distributed-redisson-lock/)  
