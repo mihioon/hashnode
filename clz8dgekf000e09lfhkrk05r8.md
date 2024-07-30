@@ -1,15 +1,15 @@
 ---
-title: "Crlf와 Lf"
+title: "캐리지 리턴(cr)과 라인 피드(lf)"
 seoTitle: "CRLF와 LF: 차이점과 사용처"
 seoDescription: "Learn about CRLF (Windows) vs. LF (Unix) line breaks and their efficiency and compatibility benefits across operating systems"
 datePublished: Tue Jul 30 2024 12:05:57 GMT+0000 (Coordinated Universal Time)
 cuid: clz8dgekf000e09lfhkrk05r8
-slug: crlf-lf
+slug: cr-lf
 tags: lf-crlf
 
 ---
 
-# 개행(줄바꿈)문자 : 캐리지 리턴(CR)과 라인 피드(LF)
+# 개행(줄바꿈)문자
 
 > `\r` Carriage Return(CR) 맨앞으로 이동하라는 뜻
 
