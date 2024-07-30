@@ -237,7 +237,7 @@ private final Set<String> activeLocks = new HashSet<>();
 
 # Redisson 구현
 
-## Pub/Sub
+## Distributed Lock
 
 ### 의존성 추가 build.gradle - Redisson
 
