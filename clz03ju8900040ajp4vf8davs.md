@@ -107,8 +107,8 @@ Quantity 체크에서 테스트가 실패했기 때문에 successCount까지는 
 > [https://www.h2database.com/html/advanced.html](https://www.h2database.com/html/advanced.html)  
 > This is the default level. Dirty reads aren't possible; non-repeatable reads and phantom reads are possible. To enable, execute the SQL statement SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED
 
-Spring 트랜잭션에서 기본적인 격리 수준은 'DEFAULT' 이다. 즉, 스프링 트랜잭션에서 격리 수준은 현재 사용하고 있는 RDBMS가 채택하는 기본 트랜잭션 격리 수준을 따라간다.  
-  
+Spring 트랜잭션에서 기본적인 격리 수준은 'DEFAULT' 이다. 즉, 스프링 트랜잭션에서 격리 수준은 현재 사용하고 있는 RDBMS가 채택하는 기본 트랜잭션 격리 수준을 따라간다.
+
 h2의 격리수준은 jpa 로 설정해줄 수 있는데, 기본 Read Committed로 동작하겠지만 DB가 바뀌어도 해당 격리수준을 최소로 유지하기 위해 isolation 레벨을 설정해줄 수 있다.
 
 ```yml
@@ -170,7 +170,7 @@ Row was updated or deleted by another transaction
 
 테스트엔 성공했지만 요청을 모두 성공시키진 못했다. 요청을 모두 처리하기 위해 테스트 코드에서successCount와 failCount를 다시 확인하고, 이번엔 서비스 메서드에 재시도로직을 추가한다.
 
-스프링에선 @Retryable 어노테이션으로 간단하게 구현할 수 있다.
+스프링에선 `@Retryable` 어노테이션으로 간단하게 구현할 수 있다.
 
 ```basic
 dependencies {
@@ -217,7 +217,7 @@ backoff = @Backoff(delay = 500, maxDelay = 600, random = true)
 
 순차로 진행될 때 차례로 공유자원에 접근하도록 하여 성공시킬 수 있도록 하는 방법은 비관적 락(Pessimistic Lock)이다. 특정 자원에 대해 Lock을 설정하고 선점해 정합성을 보장하는 방식으로, 낙관적 락과는 달리 실제로 자원에 락이 걸린다. 재고가 남아있을 때 까지 재시도와 실패없이 모든 요청을 성공시키기 위해서 비관적 락을 사용할 수 있다.
 
-테스트를 위해 서비스의 @Retryable 코드는 제거한다.
+테스트를 위해 서비스의 `@Retryable` 코드는 제거한다.
 
 JPA에서 락은 어노테이션으로 간단하게 구현할 수 있다. LockModeType은 PESSIMISTIC\_WRITE와 PESSIMISTIC\_READ가 있는데, PESSIMISTIC\_WRITE을 사용한 이유는 좀 더 아래에서 설명하도록 하고, 우선 `for update` 로 구현해보자.
 
@@ -236,7 +236,7 @@ Optional<ProductDetailEntity> findByIdWithLock(@Param("id") Long id);
 
 ![](https://cdn.hashnode.com/res/hashnode/image/upload/v1721828737240/58ad57d1-d9f1-4b8b-98a0-4b76d5ed1cf9.png align="center")
 
-만약 여러 제품의 리스트가 순서가 뒤섞인 채로 락을 획득하게 된다면 그림과 같이 트랜잭션1에서는 3에대한 락을 획득한 후 4에 대한 락을 획득하려 하고, 트랜잭션2에선 4에 대한 락을 먼저 획득한 후 1에 대한 락을 획득하려 할 것이다. 그러나 두 트랜잭션이 동시에 진행되는 경우 트랜잭션이 완료되지 않은 채로 락을 유지하고 있기 때문에 영원히 교착상태에 빠지게 되는 **데드락(Deadlock)**이 발생할 것이다.
+만약 여러 제품의 리스트가 순서가 뒤섞인 채로 락을 획득하게 된다면 그림과 같이 트랜잭션1에서는 3에대한 락을 획득한 후 4에 대한 락을 획득하려 하고, 트랜잭션2에선 4에 대한 락을 먼저 획득한 후 1에 대한 락을 획득하려 할 것이다. 그러나 두 트랜잭션이 동시에 진행되는 경우 트랜잭션이 완료되지 않은 채로 락을 유지하고 있기 때문에 영원히 교착상태에 빠지게 되는 \*\*데드락(Deadlock)\*\*이 발생할 것이다.
 
 다음과 같이 데드락이 발생하는 경우의 테스트 코드를 작성하고 테스트를 진행하면 데드락을 확인할 수 있다.
 
@@ -298,7 +298,7 @@ stocks.sort(Comparator.comparing(StockCommand::getProductId));
 
 #### 참고자료
 
-[https://velog.io/@mohai2618/동시성-환경-테스트하기](https://velog.io/@mohai2618/동시성-환경-테스트하기)  
+[https://velog.io/@mohai2618/동시성-환경-테스트하기](https://velog.io/@mohai2618/%EB%8F%99%EC%8B%9C%EC%84%B1-%ED%99%98%EA%B2%BD-%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0)  
 [https://studyandwrite.tistory.com/566](https://studyandwrite.tistory.com/566) 낙관적락  
 [https://velog.io/@rg970604/데이터베이스-공유-락과-배타-락](https://velog.io/@rg970604/%EB%8D%B0%EC%9D%B4%ED%84%B0%EB%B2%A0%EC%9D%B4%EC%8A%A4-%EA%B3%B5%EC%9C%A0-%EB%9D%BD%EA%B3%BC-%EB%B0%B0%ED%83%80-%EB%9D%BD)  
 [https://velog.io/@sontulip/optimistic-lock-infinite-loop](https://velog.io/@sontulip/optimistic-lock-infinite-loop)  
