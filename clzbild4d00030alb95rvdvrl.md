@@ -87,4 +87,4 @@ public class ConcurrencyRecoverAspect {
 
 어쨌든 현재 낙관적 락은 포인트 로직에서만 사용하고 있어서 AOP까지 설정할 필요는 없었고, 포인트 동시성 처리 관련 에러는 발생 빈도가 낮을 것으로 예상되기 때문이다.
 
-![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722531146488/94210ccd-dc74-4041-a29f-21c956ec66f6.png align="center")
+![](https://cdn.hashnode.com/res/hashnode/image/upload/v1722531260236/0dbf0296-68af-4810-8b99-9d65e6accf8f.png align="center")
