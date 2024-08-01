@@ -1,5 +1,5 @@
 ---
-title: "[ 트러블 슈팅 ] @Retryable과 @Recover"
+title: "[트러블 슈팅] @Retryable과 @Recover"
 seoDescription: "Exploring solutions for handling @Retryable and @Recover annotations in Spring Retry, focusing on consistent error codes and class segregation"
 datePublished: Thu Aug 01 2024 16:53:05 GMT+0000 (Coordinated Universal Time)
 cuid: clzbild4d00030alb95rvdvrl
