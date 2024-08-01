@@ -1,5 +1,5 @@
 ---
-title: "[ 트러블 슈팅 ] 재고 관리 서비스의 동시성 테스트 및 문제 해결(2) - Redis Lock"
+title: "[트러블 슈팅] 재고 관리 서비스의 동시성 테스트 및 문제 해결(2) - Redis Lock"
 seoTitle: "재고 관리 동시성 테스트 방법 - Redis Lock"
 seoDescription: "Redis를 사용한 재고 관리 서비스의 동시성 테스트 및 문제 해결 전략"
 datePublished: Mon Jul 29 2024 12:16:02 GMT+0000 (Coordinated Universal Time)
