@@ -1,5 +1,5 @@
 ---
-title: "[ 트러블 슈팅 ] 재고 관리 서비스의 동시성 테스트 및 문제 해결(1) - DB Lock"
+title: "[트러블 슈팅] 재고 관리 서비스의 동시성 테스트 및 문제 해결(1) - DB Lock"
 seoDescription: "재고 관리 서비스의 동시성 테스트 및 문제 해결 방안: DB Lock을 사용한 경쟁 상태와 데드락 문제 분석 및 해결 방법"
 datePublished: Wed Jul 24 2024 17:06:32 GMT+0000 (Coordinated Universal Time)
 cuid: clz03ju8900040ajp4vf8davs
