@@ -296,7 +296,7 @@ stocks.sort(Comparator.comparing(StockCommand::getProductId));
 
 락 테이블과 유사한 방식으로, DB 서버가 아닌 메모리에서 동시성 문제를 처리할 수 있도록 한 것이 바로 Redis의 분산 락이다. 인메모리 DB를 사용하면 간단하고 더 빠르게 락을 처리할 수 있다.
 
-#### 참고자료
+**📘 참고자료**
 
 [https://velog.io/@mohai2618/동시성-환경-테스트하기](https://velog.io/@mohai2618/%EB%8F%99%EC%8B%9C%EC%84%B1-%ED%99%98%EA%B2%BD-%ED%85%8C%EC%8A%A4%ED%8A%B8%ED%95%98%EA%B8%B0)  
 [https://studyandwrite.tistory.com/566](https://studyandwrite.tistory.com/566) 낙관적락  
