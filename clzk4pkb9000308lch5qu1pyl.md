@@ -1,10 +1,10 @@
 ---
-title: "주문 Facade EDA 개선"
+title: "[E-commerce] 주문 Facade EDA 개선"
 seoTitle: "Facade EDA Enhancement"
 seoDescription: "트랜잭션 분리와 Event Driven Architecture를 통해 주문 시스템의 효율성과 유지보수성을 개선합니다"
 datePublished: Wed Aug 07 2024 17:34:22 GMT+0000 (Coordinated Universal Time)
 cuid: clzk4pkb9000308lch5qu1pyl
-slug: facade-eda
+slug: e-commerce-facade-eda
 tags: event-driven-architecture
 
 ---
