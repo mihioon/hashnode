@@ -111,7 +111,7 @@ WebRTC는 미디어 데이터를 피어 간에 직접 주고받지만, **연결 
 
 > 로컬 SDP(Session Description Protocol)를 설정
 
-> **오퍼(Offer)** 또는 **응답(Answer)**을 생성한 후, 자기 자신의 피어에게 설정하기 위한 지원 함수
+> **오퍼(Offer)** 또는 \*\*응답(Answer)\*\*을 생성한 후, 자기 자신의 피어에게 설정하기 위한 지원 함수
 
 * **자신의 SDP 정보를 로컬에 설정**해, 브라우저가 그 정보를 사용하도록!
     
@@ -177,32 +177,8 @@ BUT, 여기까지 와도 미디어 데이터 자체를 전송하는 방법은 �
 
 ---
 
-> Interactive Connectivity Establishment(인터넷 연결 생성) ICE candidate : webRTC에 필요한 프로토콜(ICE 후보)
-
-**SDP**는 **세션 설정**에 대한 정보(어떤 방식으로 주고받을래?) **ICE**는 **네트워크 연결**을 설정하는 과정(어디서 만날래?)
-
-### ICE에서 STUN과 TURN 서버가 필요한 이유
-
-Peer A에서 Peer B까지 단순하게 연결하는 것으로는 작동하지 않을 수 있다.
-
-💡
-
-여기서 교환할 때 하나씩 차례대로 보낸다는 것 유의(리스트로 보내는 게 아니야)
-
-검색되는 순서대로 candidate를 보낸다.
-
-이미 스트리밍을 시작했더라도 모든 목록이 전송완료될 때 까지 계속 보냄
-
-두 peer가 호환되는 candidiate를 제안하면 미디어 통신 시작
-
-Q.
-
-그럼 양방향 통신을 할 때 로컬 유저Peer A와 원격 유저Peer B인 경우와 로컬 유저Peer B와 원격 유저Peer A인 경우 통신 candidiate가 다를 수도 있나?
-
-A. 그렇다.
-
 ```jsx
-peerConnection.onicecandidate = (event) => {
+peerConnection.onicecandidate = (event) => { // WebRTC 지원 함수
   if (event.candidate) {
     // ICE 후보가 생성되면 시그널링 서버를 통해 피어 B에게 전달
     signalingServer.send(JSON.stringify({ candidate: event.candidate }));
@@ -210,18 +186,73 @@ peerConnection.onicecandidate = (event) => {
 };
 ```
 
-WebRTC에서 **ICE 후보(ICE candidate)** 가 생성되었다는 것은 \*\*피어 간의 연결을 위한 네트워크 경로(IP 주소 및 포트 번호)\*\*가 찾아졌음을 의미
+> Interactive Connectivity Establishment(인터넷 연결 생성)
 
-해당 포트를 찾으면 이벤트를 발행하는 기능은 WebRTC에서 제공하는 내장 기능
+> ICE candidate : webRTC에 필요한 프로토콜(ICE 후보)
 
-두 피어는 각자의 **ICE 후보**를 서로 교환한 후, **서로 연결할 수 있는 최적의 경로를 선택**
+* **SDP**는 **세션 설정**에 대한 정보(어떤 방식으로 주고받을래?)
+    
+* **ICE**는 **네트워크 연결**을 설정하는 과정(어디서 만날래?)
+    
+
+## **ICE 후보(ICE candidate)**
+
+> **ICE 후보(ICE candidate)** 가 생성됨  
+> \= **피어 간의 연결을 위한 네트워크 경로(IP 주소 및 포트 번호)**가 찾아짐
 
 **ICE 후보**는 **피어 간의 통신을 시도할 수 있는 다양한 네트워크 경로**
 
-**IP 주소와 포트 정보**가 포함
+두 피어는 각자의 **ICE 후보**를 서로 교환한 후, **서로 연결할 수 있는 최적의 경로를 선택함**
+
+<div data-node-type="callout">
+<div data-node-type="callout-emoji">💡</div>
+<div data-node-type="callout-text">이미 스트리밍을 시작했더라도 모든 목록이 전송완료될 때 까지 계속 ICE 정보를 보냄</div>
+</div>
+
+## **Candidate 종류**
 
 * **로컬 후보(Local Candidate)**: 로컬 네트워크 내에서 통신할 수 있는 IP와 포트.
     
 * **STUN 후보(Server Reflexive Candidate)**: NAT 뒤에 있는 피어가 공인 IP를 얻기 위해 STUN 서버를 통해 획득한 경로.
     
 * **TURN 후보(Relayed Candidate)**: 피어 간 직접 통신이 불가능할 때 TURN 서버를 통한 중계 경로.
+    
+
+## ICE에서 STUN과 TURN 서버가 필요한 이유
+
+PEER A에서 PEER B까지 단순하게 연결하는 것으로는 작동하지 않을 수 있다는 사실을 명심하자
+
+네트워크 환경은 가변적이고 복잡하기 때문에,  
+NAT(Network Address Translation)와 방화벽이 있는 환경에서는 직접적인 피어 간 연결이 어렵다!
+
+### **STUN 서버**
+
+* NAT 뒤에 있는 피어가 공인 IP 주소를 얻기 위해 사용
+    
+* STUN 서버는 피어가 자신의 공인 IP 주소와 포트를 확인할 수 있게 도와줌
+    
+
+### **TURN 서버**
+
+* 피어 간 직접 통신이 불가능할 때 사용
+    
+* 중계 서버 역할을 하여, 피어 간의 데이터를 중계함
+    
+* 특히 방화벽이나 대칭형 NAT 환경에서 유용
+    
+
+## Check Point
+
+> Q. 양방향 통신을 할 때 로컬 유저(PEER A)와 원격 유저(PEER B)인 경우와 로컬 유저(PEER B)와 원격 유저(PEER A)인 경우 통신 candidiate가 다를 수도 있나?
+> 
+> A. 그렇다.
+
+---
+
+# 미디어 전송을 위한 정보 교환 완료
+
+> ICE 후보 교환까지 완료될 경우 미디어 데이터 전송이 가능해짐
+
+ICE 후보 교환을 통해 피어 간의 최적의 네트워크 경로가 설정되면,  
+WebRTC 연결이 확립되고,  
+이를 통해 오디오, 비디오 등의 미디어 데이터를 실시간으로 주고받을 수 있게 된다!
