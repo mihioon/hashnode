@@ -85,7 +85,7 @@ window.ChatInterface.onMessageReceived((data) => {
 });
 ```
 
-### 3\. Electron 메인 프로세스에서 메시지 전송
+### Electron 메인 프로세스
 
 ```javascript
 ipcMain.on('send-message', (event, text) => {
