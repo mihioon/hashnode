@@ -4,7 +4,7 @@ seoTitle: "Race Condition Solutions for Live Streaming"
 seoDescription: "실시간 스트리밍에서 이벤트 기반 아키텍처를 통해 락 없이 race condition을 다루고 성능을 최적화하는 방법을 설명합니다"
 datePublished: Sun Jun 15 2025 14:49:25 GMT+0000 (Coordinated Universal Time)
 cuid: cmbxs77iu000402l2hysu7jme
-slug: race-condition
+slug: streaming-race-condition-1
 tags: streaming, race-condition, signaling
 
 ---
